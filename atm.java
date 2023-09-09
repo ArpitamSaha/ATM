@@ -28,7 +28,7 @@ public class atm {
     }
 
     public static void Deposit(String accountNumber) {
-        System.out.println("Enter the balance you want to deposit.");
+        System.out.println("Enter the amount you want to deposit.");
         double deposit = sc.nextDouble();
         if (accBal.get(accountNumber) == null) {
             accBal.put(accountNumber, deposit);
@@ -39,7 +39,20 @@ public class atm {
         System.out.println(deposit + " has been successfully deposited in your bank account");
     }
 
-    public static void checkBal(String accountNumber) {
+    public static void Withdraw(String accountNumber) {
+        System.out.println("Enter the amount you want to withdraw");
+        double withdraw = sc.nextDouble();
+        if (withdraw > accBal.get(accountNumber)) {
+            System.out.println("Insufficient Balance.");
+            return;
+        }
+        System.out.println("Rs." + withdraw + " has been successfully withdrawn from your account.");
+        accBal.put(accountNumber, (accBal.get(accountNumber) - withdraw));
+        System.out.println("Your current account balance is Rs." + accBal.get(accountNumber));
+
+    }
+
+    public static void checkBalance(String accountNumber) {
         System.out.println("Your account balance is " + accBal.get(accountNumber));
         if (accBal.get(accountNumber) == null) {
             System.out.println("Do you want to deposit ? YES = 1 | NO = 0");
@@ -75,6 +88,7 @@ public class atm {
         }
         while (true) {
             System.out.println("----------Automated Teller Machine----------");
+            System.out.println("Exit the ATM");
             System.out.println("1.Deposit Money");
             System.out.println("2.Cash Withdraw");
             System.out.println("3.Check Balance");
@@ -82,14 +96,17 @@ public class atm {
             int choice = sc.nextInt();
 
             switch (choice) {
+                case 0:
+                    System.exit(0);
+                    break;
                 case 1:
                     Deposit(accountNumber);
                     break;
                 case 2:
-
+                    Withdraw(accountNumber);
                     break;
                 case 3:
-                    checkBal(accountNumber);
+                    checkBalance(accountNumber);
                     break;
                 default:
                     System.out.println("Invalid Choice.");
